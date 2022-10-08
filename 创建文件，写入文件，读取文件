@@ -1,0 +1,46 @@
+#include<stdio.h>
+struct stu{
+char name[30];
+int age;
+double score;
+};
+int read_file();
+int write_file();
+int main()
+{
+    if(write_file()<0)//将结构体数据写入文件
+        return-1;
+    read_file();//读文件，并显示数据
+    return 0;
+}
+
+int write_file()
+{
+    FILE*fp=NULL;
+    struct stu student={"zhangsan",18,99.5};
+    fp=fopen("abc","wb");//b表示以二进制方式打开文件
+    if(fp==NULL)//打开文件失败，返回错误信息
+    {
+        printf("open file for write error");
+        return-1;
+    }
+    fwrite(&student,sizeof(struct stu),1,fp);//向文件中写入数据
+    fclose(fp);//关闭文件
+    return 0;
+}
+
+int read_file()
+{
+    FILE*fp=NULL;
+    struct stu student;
+    fp=fopen("abc","rb");//b表示以二进制方式打开文件
+    if(fp==NULL)//打开文件失败，返回错误信息
+    {
+        printf("open file for read error");
+        return-1;
+    }
+    fread(&student,sizeof(struct stu),1,fp);//读文件中数据到结构体
+    printf("name=%s,age=%dscore=%.2lf",student.name,student.age,student.score);//显示结构体中的数据
+    fclose(fp);//关闭文件
+    return 0;
+}
